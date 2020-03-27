@@ -7,7 +7,7 @@ export const Conditions = ({ conditions }) => {
   const options = {
     filter: false,
     onCellClick: (colData, cellMeta) => {
-      // TODO: imperfect solution, would be way better to get a proper <a> element working with the table library ...
+      // TODO: imperfect solution, would be way better to get a proper anchor element with the table library ...
       if (cellMeta.colIndex === 2) {
         window.location = `https://www.ncbi.nlm.nih.gov/pubmed/?term=${colData}`
       }
@@ -21,9 +21,7 @@ export const Conditions = ({ conditions }) => {
       return [
         condition.resource.code.text,
         condition.resource.dateRecorded,
-
         condition.resource.code.text
-        // `<a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=${condition.resource.code.text}">Search</a>`
       ];
     })
   }

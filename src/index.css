@@ -1,3 +1,4 @@
+/* GENERAL */
 body {
   margin: 0;
   padding: 1rem;
@@ -13,6 +14,7 @@ code {
     monospace;
 }
 
+/* WIDGET */
 .widget-wrapper {
   position: absolute;
   top: 5%;
@@ -27,4 +29,10 @@ code {
   background-color: white;
   box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.32);
   border-radius: 5px;
+}
+
+/* DEMOGRAPHICS */
+.demographics {
+  display: flex;
+  justify-content: space-around;
 }
