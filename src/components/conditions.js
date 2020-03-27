@@ -17,13 +17,19 @@ export const Conditions = ({ conditions }) => {
   let data = [];
 
   if (conditions) {
-    data = conditions.entry.map(condition => {
-      return [
-        condition.resource.code.text,
-        condition.resource.dateRecorded,
-        condition.resource.code.text
-      ];
-    })
+    data = conditions.entry.reduce((acc, condition) => {
+      const isActive = condition.resource.clinicalStatus === 'active';
+
+      if (isActive) {
+        acc.push([
+          condition.resource.code.text,
+          condition.resource.dateRecorded,
+          condition.resource.code.text
+        ])
+      }
+
+      return acc;
+    }, []);
   }
 
   return <MUIDataTable
