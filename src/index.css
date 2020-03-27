@@ -14,6 +14,11 @@ code {
     monospace;
 }
 
+/* PATIENTS */
+.patient-button {
+  font: 400 1rem system-ui;
+}
+
 /* WIDGET */
 .widget-wrapper {
   position: absolute;
