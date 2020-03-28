@@ -2,16 +2,22 @@ import React from 'react';
 import MUIDataTable from 'mui-datatables';
 
 export const Conditions = ({ conditions }) => {
-  const columns = ["Condition Name", "Date First Recorded", "Search on PubMed"];
-
-  const options = {
-    filter: false,
-    onCellClick: (colData, cellMeta) => {
-      // TODO: imperfect solution, would be way better to get a proper anchor element with the table library ...
-      if (cellMeta.colIndex === 2) {
-        window.location = `https://www.ncbi.nlm.nih.gov/pubmed/?term=${colData}`
+  const columns = [
+    { name: 'Condition Name' },
+    { name: 'Date First Recorded' },
+    {
+      name: 'Search on PubMed',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return <a href={`https://www.ncbi.nlm.nih.gov/pubmed/?term=${value}`}>{value}</a>
+        }
       }
     }
+  ];
+
+
+  const options = {
+    filter: false
   };
 
   let data = [];
