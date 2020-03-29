@@ -1,5 +1,6 @@
 import React from 'react';
 import MUIDataTable from 'mui-datatables';
+import { filterToActiveConditions } from '../utils';
 
 export const Conditions = ({ conditions }) => {
   const columns = [
@@ -23,16 +24,12 @@ export const Conditions = ({ conditions }) => {
   let data = [];
 
   if (conditions) {
-    data = conditions.entry.reduce((acc, condition) => {
-      const isActive = condition.resource.clinicalStatus === 'active';
-
-      if (isActive) {
-        acc.push([
-          condition.resource.code.text,
-          condition.resource.dateRecorded,
-          condition.resource.code.text
-        ])
-      }
+    data = filterToActiveConditions(conditions.entry).reduce((acc, condition) => {
+      acc.push([
+        condition.resource.code.text,
+        condition.resource.dateRecorded,
+        condition.resource.code.text
+      ]);
 
       return acc;
     }, []);

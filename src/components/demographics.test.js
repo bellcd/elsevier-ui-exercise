@@ -7,13 +7,11 @@ import { Demographics } from './demographics';
 
 let container = null;
 beforeEach(() => {
-  // setup a DOM element as a render target
   container = document.createElement('div');
   document.body.appendChild(container);
 });
 
 afterEach(() => {
-  // cleanup on exciting
   unmountComponentAtNode(container);
   container.remove();
   container = null;

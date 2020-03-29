@@ -1,11 +1,17 @@
 import React from 'react';
 import { PATIENTS } from '../sample-data';
+import { Patient } from './patient';
 
 export const Patients = ({ changeActivePatient }) => {
   const patientList = PATIENTS.map(patient => {
-    return <ul key={patient.id}>
-      <button className="patient-button" onClick={changeActivePatient} ><li data-id={patient.id}>{patient.name}</li></button>
-    </ul>
+    return (
+      <Patient
+        patient={patient}
+        changeActivePatient={changeActivePatient}
+        key={patient.id}
+      >
+      </Patient>
+    );
   });
-  return patientList;
+  return <ul className="patient-list">{patientList}</ul>;
 }
