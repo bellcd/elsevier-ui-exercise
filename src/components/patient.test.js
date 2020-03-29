@@ -18,7 +18,9 @@ afterEach(() => {
 });
 
 it(`button contains the patient's name`, () => {
-  render(<Patient patient={PATIENTS[0]} />, container);
+  act(() => {
+    render(<Patient patient={PATIENTS[0]} />, container);
+  });
   const button = document.querySelector('[data-testid=change-active-patient]');
   expect(button.textContent).toBe(PATIENTS[0].name);
 });
