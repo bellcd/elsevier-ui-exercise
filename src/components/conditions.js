@@ -16,7 +16,6 @@ export const Conditions = ({ conditions }) => {
     }
   ];
 
-
   const options = {
     filter: false
   };

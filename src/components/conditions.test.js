@@ -18,11 +18,6 @@ afterEach(() => {
   container = null;
 });
 
-xit(`only displays active conditions`, () => {
-  // 201 total conditions
-  // 31 should be active
-});
-
 it(`each row displays appropriate text, dateRecorded, and a PubMed link that searches for the relevant condition`, () => {
   act(() => {
     render(<Conditions conditions={PATIENT_CONDITIONS} />, container);

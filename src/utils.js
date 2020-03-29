@@ -6,8 +6,6 @@ const options = {
   }
 }
 
-// TODO: add tests
-
 // get a patient's info
 export const getPatientInfo = (patientId) => {
   return fetch(`${config.serviceRootUrl}/Patient/${patientId}`, options);
