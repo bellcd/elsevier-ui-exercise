@@ -1,20 +1,21 @@
 import React from 'react';
 
 export const Demographics = ({ patient }) => {
-  return !patient ? 'Please select a patient first' : (
-    <div className="demographics">
+  const content = !patient ? 'Please select a patient first' : (
+    <>
       <span>
         <span>Name: </span>
-        <span>{patient.name[patient.name.findIndex(name => name.use === 'official')].text}</span>
+        <span className="patient-name-official">{patient.name[patient.name.findIndex(name => name.use === 'official')].text}</span>
       </span>
       <span>
         <span>Gender: </span>
-        <span>{patient.gender}</span>
+        <span className="patient-gender">{patient.gender}</span>
       </span>
       <span>
         <span>Birthdate: </span>
-        <span>{patient.birthDate}</span>
+        <span className="patient-birth-date">{patient.birthDate}</span>
       </span>
-    </div>
+    </>
   );
+  return <div className="demographics">{content}</div>
 }
