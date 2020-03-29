@@ -15,3 +15,4 @@ export const getPatientInfo = (patientId) => {
 export const getConditions = (patientId) => {
   return fetch(`${config.serviceRootUrl}/Condition/?patient=${patientId}`, options);
 }
+

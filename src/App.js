@@ -13,8 +13,8 @@ class App extends React.Component {
 
     this.state = {
       activePatientId: '',
-      patient: null,
-      conditions: null,
+      patients: {},
+      conditions: {},
       isLoading: false,
       error: null
     };
@@ -24,19 +24,34 @@ class App extends React.Component {
 
   changeActivePatient(e) {
     const activePatientId = e.target.dataset.id;
-    this.setState(() => ({ activePatientId, isLoading: true }), () => {
+    const patient = this.state.patients[activePatientId];
+    const conditions = this.state.conditions[activePatientId];
 
-      // TODO: check if this patient's data is already on the client before re-fetching
-      Promise.all([getPatientInfo(activePatientId), getConditions(activePatientId)])
-        .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(data => {
-          this.setState({ patient: data[0], conditions: data[1], isLoading: false, error: null })
-        })
-        // TODO: Improve error handling
-        .catch(error => {
-          this.setState({ error: error.message, isLoading: false })
-        });
-    });
+    if (patient && conditions) {
+      console.log({ patient, conditions });
+
+      this.setState({ activePatientId, isLoading: false, error: null });
+    } else {
+      this.setState(() => ({ activePatientId, isLoading: true }), () => {
+
+        Promise.all([getPatientInfo(activePatientId), getConditions(activePatientId)])
+          .then(responses => Promise.all(responses.map(response => response.json())))
+          .then(data => {
+            this.setState((state) => {
+              return {
+                patients: {...state.patients, ...{ [activePatientId]: data[0] }},
+                conditions: {...state.conditions, ...{ [activePatientId]: data[1] }},
+                isLoading: false,
+                error: null
+              }
+            });
+          })
+          // TODO: Improve error handling
+          .catch(error => {
+            this.setState({ error: error.message, isLoading: false })
+          });
+      });
+    }
   }
 
   render() {
@@ -62,10 +77,10 @@ class App extends React.Component {
         >
         </Patients>
         <Demographics
-          patient={this.state.patient}
+          patient={this.state.patients[this.state.activePatientId]}
         >
         </Demographics>
-        <Conditions conditions={this.state.conditions}></Conditions>
+        <Conditions conditions={this.state.conditions[this.state.activePatientId]}></Conditions>
       </>
     );
   }
