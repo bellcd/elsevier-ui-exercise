@@ -1,9 +1,10 @@
-import {
+import utils from './utils';
+const {
   filterToActiveConditions,
   updateActivePatient,
   updatePatientsAndConditions,
   havePatientAndConditions
-} from './utils';
+} = utils;
 import { PATIENT_CONDITIONS, PATIENTS, PATIENT_DEMOGRAPHICS } from './sample-data';
 
 let state = {

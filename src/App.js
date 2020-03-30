@@ -4,13 +4,12 @@ import { Patients } from './components/patients';
 import { Widget } from './components/widget';
 import { getPatientInfo, getConditions } from './utils';
 import { Demographics } from './components/demographics';
-import {
+import utils from './utils';
+const {
   updateActivePatient,
   updatePatientsAndConditions,
   havePatientAndConditions
-} from './utils';
-
-// TODO: add proper tests
+} = utils;
 
 class App extends React.Component {
   constructor(props) {
@@ -33,13 +32,7 @@ class App extends React.Component {
       this.setState(updateActivePatient(activePatientId, false));
     } else {
       this.setState(updateActivePatient(activePatientId, true), () => {
-
-        // potential tests
-
-        // Promise.all is invoked with the correct promises
         Promise.all([getPatientInfo(activePatientId), getConditions(activePatientId)])
-        // an array of Response objects is mapped to that array parsed as JSON
-        // unnecessary??
           .then(responses => Promise.all(responses.map(response => response.json())))
           .then(data => {
             this.setState(updatePatientsAndConditions(state, activePatientId, data[0], data[1]));
@@ -69,7 +62,7 @@ class App extends React.Component {
     return (
       <>
         {widget}
-        <div>Select a Patient to get details about them</div>
+        <div className="welcome-message">Select a Patient to get details about them</div>
         <Patients
           changeActivePatient={this.changeActivePatient}
         >

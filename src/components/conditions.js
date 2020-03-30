@@ -1,6 +1,7 @@
 import React from 'react';
 import MUIDataTable from 'mui-datatables';
-import { filterToActiveConditions } from '../utils';
+import utils from '../utils';
+const { filterToActiveConditions } = utils;
 
 export const Conditions = ({ conditions }) => {
   const columns = [

@@ -4,7 +4,8 @@ import { act } from 'react-dom/test-utils';
 import { PATIENT_CONDITIONS } from '../sample-data';
 
 import { Conditions } from './conditions';
-import { filterToActiveConditions } from '../utils';
+import utils from '../utils';
+const { filterToActiveConditions } = utils;
 
 let container = null;
 beforeEach(() => {

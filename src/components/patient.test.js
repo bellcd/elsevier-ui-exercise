@@ -24,17 +24,3 @@ it(`button contains the patient's name`, () => {
   const button = document.querySelector('[data-testid=change-active-patient]');
   expect(button.textContent).toBe(PATIENTS[0].name);
 });
-
-// TODO: is this redundant??
-xit(`TODO: button works correctly???!!`, () => {
-  const changeActivePatient = jest.fn();
-  act(() => {
-    render(<Patient patient={PATIENTS[0]} changeActivePatient={changeActivePatient} />, container);
-  });
-
-  act(() => {
-    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-  });
-
-  expect(changeActivePatient).toHaveBeenCalledTimes(1);
-});
