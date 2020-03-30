@@ -2,13 +2,14 @@ import React from 'react';
 import { Conditions } from './components/conditions';
 import { Patients } from './components/patients';
 import { Widget } from './components/widget';
-import { getPatientInfo, getConditions } from './utils';
 import { Demographics } from './components/demographics';
 import utils from './utils';
 const {
   updateActivePatient,
   updatePatientsAndConditions,
-  havePatientAndConditions
+  havePatientAndConditions,
+  getPatientInfo,
+  getConditions
 } = utils;
 
 class App extends React.Component {
@@ -35,7 +36,7 @@ class App extends React.Component {
         Promise.all([getPatientInfo(activePatientId), getConditions(activePatientId)])
           .then(responses => Promise.all(responses.map(response => response.json())))
           .then(data => {
-            this.setState(updatePatientsAndConditions(state, activePatientId, data[0], data[1]));
+            this.setState(updatePatientsAndConditions(this.state, activePatientId, data[0], data[1]));
           })
           // TODO: Improve error handling
           .catch(error => {
