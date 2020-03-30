@@ -6,6 +6,8 @@ const options = {
   }
 }
 
+// TODO: add proper comments
+
 // get a patient's info
 export const getPatientInfo = (patientId) => {
   return fetch(`${config.serviceRootUrl}/Patient/${patientId}`, options);
@@ -18,4 +20,25 @@ export const getConditions = (patientId) => {
 
 export const filterToActiveConditions = (conditionsList) => {
   return conditionsList.filter((condition) => condition.resource.clinicalStatus === 'active');
+};
+
+export const updateActivePatient = (activePatientId, isLoading) => {
+  return {
+    activePatientId,
+    isLoading,
+    error: null
+  }
+};
+
+export const updatePatientsAndConditions = (state, activePatientId, patient, conditions) => {
+  return {
+    patients: {...state.patients, ...{ [activePatientId]: patient }},
+    conditions: {...state.conditions, ...{ [activePatientId]: conditions }},
+    isLoading: false,
+    error: null
+  }
+};
+
+export const havePatientAndConditions = (state, activePatientId) => {
+  return !!(state.patients[activePatientId] && state.conditions[activePatientId]);
 };

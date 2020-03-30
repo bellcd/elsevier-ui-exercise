@@ -4,6 +4,11 @@ import { Patients } from './components/patients';
 import { Widget } from './components/widget';
 import { getPatientInfo, getConditions } from './utils';
 import { Demographics } from './components/demographics';
+import {
+  updateActivePatient,
+  updatePatientsAndConditions,
+  havePatientAndConditions
+} from './utils';
 
 // TODO: add proper tests
 
@@ -24,27 +29,20 @@ class App extends React.Component {
 
   changeActivePatient(e) {
     const activePatientId = e.target.dataset.id;
-    const patient = this.state.patients[activePatientId];
-    const conditions = this.state.conditions[activePatientId];
-
-    if (patient && conditions) {
-      console.log({ patient, conditions });
-
-      this.setState({ activePatientId, isLoading: false, error: null });
+    if (havePatientAndConditions(this.state, activePatientId)) {
+      this.setState(updateActivePatient(activePatientId, false));
     } else {
-      this.setState(() => ({ activePatientId, isLoading: true }), () => {
+      this.setState(updateActivePatient(activePatientId, true), () => {
 
+        // potential tests
+
+        // Promise.all is invoked with the correct promises
         Promise.all([getPatientInfo(activePatientId), getConditions(activePatientId)])
+        // an array of Response objects is mapped to that array parsed as JSON
+        // unnecessary??
           .then(responses => Promise.all(responses.map(response => response.json())))
           .then(data => {
-            this.setState((state) => {
-              return {
-                patients: {...state.patients, ...{ [activePatientId]: data[0] }},
-                conditions: {...state.conditions, ...{ [activePatientId]: data[1] }},
-                isLoading: false,
-                error: null
-              }
-            });
+            this.setState(updatePatientsAndConditions(state, activePatientId, data[0], data[1]));
           })
           // TODO: Improve error handling
           .catch(error => {
